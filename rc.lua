@@ -236,10 +236,12 @@ awful.rules.rules = {
     },
     
     { rule = { instance = mykeyboard },
-      properties = { floating = true , above = true}},
+      properties = {
+        floating = true,
+        above = true,
+        titlebars_enabled = true }},
 
-    -- Add titlebars to normal clients and dialogs
-    { rule_any = {type = { "normal", "dialog" }
+    { rule_any = { type = { "dialog" }
       }, properties = { titlebars_enabled = true }
     },
 }
@@ -294,10 +296,6 @@ client.connect_signal("request::titlebars", function(c)
             layout  = wibox.layout.flex.horizontal
         },
         { -- Right
-            awful.titlebar.widget.floatingbutton (c),
-            awful.titlebar.widget.maximizedbutton(c),
-            awful.titlebar.widget.stickybutton   (c),
-            awful.titlebar.widget.ontopbutton    (c),
             awful.titlebar.widget.closebutton    (c),
             layout = wibox.layout.fixed.horizontal()
         },
