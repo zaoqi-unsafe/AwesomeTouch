@@ -14,9 +14,8 @@ local hotkeys_popup = require("awful.hotkeys_popup").widget
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
--- Load Debian menu entries
-local debian = require("debian.menu")
-local has_fdo, freedesktop = pcall(require, "freedesktop")
+local freedesktop = require("freedesktop")
+local has_fdo = true
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -61,7 +60,6 @@ modkey = "Mod4"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
-    awful.layout.suit.fair,
     awful.layout.suit.max,
 }
 -- }}}
