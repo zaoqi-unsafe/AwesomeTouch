@@ -109,7 +109,7 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- {{{ Wibar
 -- Create a textclock widget
-mytextclock = wibox.widget.textclock()
+mytextclock = wibox.widget.textclock("%H:%M")
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
@@ -185,7 +185,6 @@ awful.screen.connect_for_each_screen(function(s)
             -- mykeyboardlayout,
             wibox.widget.systray(),
             mytextclock,
-            s.mylayoutbox,
         },
     }
 end)
@@ -239,6 +238,7 @@ awful.rules.rules = {
       properties = {
         floating = true,
         above = true,
+        skip_taskbar = true,
         titlebars_enabled = true }},
 
     { rule_any = { type = { "dialog" }
