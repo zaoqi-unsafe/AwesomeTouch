@@ -150,6 +150,11 @@ local function set_keyboard()
     wip()
 end
 
+--wip
+local myclosebutton=awful.widget.button{ image = nil }
+--myclosebutton:burtons
+
+
 local function set_wallpaper(s)
     -- Wallpaper
     if beautiful.wallpaper then
