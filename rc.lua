@@ -152,7 +152,9 @@ end
 
 --wip
 local myclosebutton=awful.widget.button{ image = nil }
---myclosebutton:burtons
+myclosebutton:buttons(gears.table.join(
+--wip
+))
 
 
 local function set_wallpaper(s)
