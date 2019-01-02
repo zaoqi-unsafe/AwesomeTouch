@@ -15,7 +15,6 @@ local hotkeys_popup = require("awful.hotkeys_popup").widget
 require("awful.hotkeys_popup.keys")
 
 local freedesktop = require("freedesktop")
-local has_fdo = true
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -104,9 +103,6 @@ mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 -- }}}
 
--- Keyboard map indicator and switcher
-mykeyboardlayout = awful.widget.keyboardlayout()
-
 -- {{{ Wibar
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock("%H:%M")
@@ -132,6 +128,27 @@ local tasklist_buttons = gears.table.join(
                                                   c:raise()
                                               end
                                           end))
+
+local mykeyboard = "xvkbd"
+local function set_keyboard()
+    local kb = nil
+    for _, c in ipairs(client.get()) do
+        if c.instance == mykeyboard then
+            kb = c
+            break
+        end
+    end
+    for _, c in ipairs(client.get()) do
+        if c.instance == mykeyboard and c ~= kb then
+            c:kill()
+        end
+    end
+    if not kb then
+        awful.spawn("xvkbd -no-keypad")
+        return
+    end
+    wip()
+end
 
 local function set_wallpaper(s)
     -- Wallpaper
@@ -182,7 +199,6 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            -- mykeyboardlayout,
             wibox.widget.systray(),
             mytextclock,
         },
@@ -202,8 +218,6 @@ globalkeys = gears.table.join(
 
 clientkeys = gears.table.join(
 )
-
-local mykeyboard = "xvkbd"
 
 clientbuttons = gears.table.join(
     awful.button({ }, 1, function (c)
