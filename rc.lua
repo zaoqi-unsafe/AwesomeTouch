@@ -153,8 +153,12 @@ end
 --wip
 local myclosebutton=awful.widget.button{ image = "/usr/share/awesome/themes/default/titlebar/close_normal.png" }
 myclosebutton:buttons(gears.table.join(
---wip
-    awful.button({}, 1, nil, function() end)
+    awful.button({}, 1, nil, function()
+        local c = client.focus
+        if c then
+            c:kill()
+        end
+    end)
 ))
 
 
