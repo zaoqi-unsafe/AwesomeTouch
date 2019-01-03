@@ -112,7 +112,7 @@ myawesomemenu = {
 
     mymainmenu = freedesktop.menu.build({
         before = { { "awesome", myawesomemenu, beautiful.awesome_icon } },
-        after =  { { "open terminal", terminal } }
+        after =  { { "open terminal", terminal }, { "keyboard", set_keyboard } }
     })
 
 mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
@@ -263,7 +263,8 @@ awful.rules.rules = {
         floating = true,
         above = true,
         skip_taskbar = true,
-        titlebars_enabled = true }},
+        titlebars_enabled = true },
+      callback = function(x) set_keyboard() end },
 
     { rule_any = { type = { "dialog" }
       }, properties = { titlebars_enabled = true }
