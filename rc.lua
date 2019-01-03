@@ -80,6 +80,28 @@ end
 
 -- {{{ Menu
 -- Create a launcher widget and a main menu
+
+local mykeyboard = "xvkbd"
+local function set_keyboard()
+    local kb = nil
+    for _, c in ipairs(client.get()) do
+        if c.instance == mykeyboard then
+            kb = c
+            break
+        end
+    end
+    for _, c in ipairs(client.get()) do
+        if c.instance == mykeyboard and c ~= kb then
+            c:kill()
+        end
+    end
+    if not kb then
+        awful.spawn("xvkbd -no-keypad")
+        return
+    end
+    --wip
+end
+
 myawesomemenu = {
    { "hotkeys", function() return false, hotkeys_popup.show_help end},
    { "manual", terminal .. " -e man awesome" },
@@ -129,28 +151,6 @@ local tasklist_buttons = gears.table.join(
                                               end
                                           end))
 
-local mykeyboard = "xvkbd"
-local function set_keyboard()
-    local kb = nil
-    for _, c in ipairs(client.get()) do
-        if c.instance == mykeyboard then
-            kb = c
-            break
-        end
-    end
-    for _, c in ipairs(client.get()) do
-        if c.instance == mykeyboard and c ~= kb then
-            c:kill()
-        end
-    end
-    if not kb then
-        awful.spawn("xvkbd -no-keypad")
-        return
-    end
-    wip()
-end
-
---wip
 local myclosebutton=awful.widget.button{ image = "/usr/share/awesome/themes/default/titlebar/close_normal.png" }
 myclosebutton:buttons(gears.table.join(
     awful.button({}, 1, nil, function()
