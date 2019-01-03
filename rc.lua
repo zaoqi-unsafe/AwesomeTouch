@@ -110,12 +110,9 @@ myawesomemenu = {
    { "quit", function() awesome.quit() end}
 }
 
-local menu_awesome = { "awesome", myawesomemenu, beautiful.awesome_icon }
-local menu_terminal = { "open terminal", terminal }
-
     mymainmenu = freedesktop.menu.build({
-        before = { menu_awesome },
-        after =  { menu_terminal }
+        before = { { "awesome", myawesomemenu, beautiful.awesome_icon } },
+        after =  { { "open terminal", terminal } }
     })
 
 mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
