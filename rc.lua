@@ -151,9 +151,10 @@ local function set_keyboard()
 end
 
 --wip
-local myclosebutton=awful.widget.button{ image = nil }
+local myclosebutton=awful.widget.button{ image = "/usr/share/awesome/themes/default/titlebar/close_normal.png" }
 myclosebutton:buttons(gears.table.join(
 --wip
+    awful.button({}, 1, nil, function() end)
 ))
 
 
@@ -207,6 +208,7 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             wibox.widget.systray(),
+            myclosebutton,
             mytextclock,
         },
     }
