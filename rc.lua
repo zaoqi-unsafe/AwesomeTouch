@@ -75,7 +75,7 @@ local function update_mykeyboard_height()
     mykeyboardbar = awful.wibar{ position = "bottom", visible = false, height = mykeyboardheight }
 end
 update_mykeyboard_height()
-local function set_keyboard()
+local function set_mykeyboard()
     awful.spawn("xvkbd -no-keypad")
 end
 local function kill_mykeyboard()
@@ -94,7 +94,7 @@ local function mykeyboard_running()
     end
     return false
 end
-screen.connect_signal("tag::history::update", function() if mykeyboard_running() then set_keyboard() end end)
+screen.connect_signal("tag::history::update", function() if mykeyboard_running() then set_mykeyboard() end end)
 
 myawesomemenu = {
    { "hotkeys", function() return false, hotkeys_popup.show_help end},
@@ -104,11 +104,17 @@ myawesomemenu = {
    { "quit", function() awesome.quit() end}
 }
 
-    mymainmenu = freedesktop.menu.build({
-        before = { { "awesome", myawesomemenu, beautiful.awesome_icon } },
-        after =  { { "open terminal", terminal }, { "keyboard", set_keyboard } }
-    })
-
+mymainmenu = freedesktop.menu.build{
+    before = {
+        { "awesome", myawesomemenu, beautiful.awesome_icon }
+    },
+    after = {
+        { "open terminal", terminal },
+        { "keyboard", {
+            { "on", set_mykeyboard },
+            { "off", kill_mykeyboard }}},
+    }
+}
 mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
                                      menu = mymainmenu })
 
