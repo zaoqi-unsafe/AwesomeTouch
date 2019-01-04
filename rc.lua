@@ -223,8 +223,7 @@ awful.rules.rules = {
           -- wip
       end },
 
-    { rule_any = { type = { "dialog" }
-      }, properties = { titlebars_enabled = true }
+    { rule_any = { type = { "dialog" } }, properties = { titlebars_enabled = true }
     },
 }
 
