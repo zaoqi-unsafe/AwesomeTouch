@@ -16,7 +16,6 @@ require("awful.hotkeys_popup.keys")
 
 local freedesktop = require("freedesktop")
 
--- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
 if awesome.startup_errors then
@@ -39,31 +38,20 @@ do
         in_error = false
     end)
 end
--- }}}
 
--- {{{ Variable definitions
--- Themes define colours, icons, font and wallpapers.
 beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 
--- This is used later as the default terminal and editor to run.
 terminal = "x-terminal-emulator"
 editor = os.getenv("EDITOR") or "editor"
 editor_cmd = terminal .. " -e " .. editor
 
--- Default modkey.
--- Usually, Mod4 is the key with a logo between Control and Alt.
--- If you do not like this or do not have such a key,
--- I suggest you to remap Mod4 to another key using xmodmap or other tools.
--- However, you can use another modifier like Mod1, but it may interact with others.
 modkey = "Mod4"
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
     awful.layout.suit.max,
 }
--- }}}
 
--- {{{ Helper functions
 local function client_menu_toggle_fn()
     local instance = nil
 
@@ -76,14 +64,13 @@ local function client_menu_toggle_fn()
         end
     end
 end
--- }}}
-
--- {{{ Menu
--- Create a launcher widget and a main menu
 
 local mykeyboard = "xvkbd"
 local function set_keyboard()
     awful.spawn("xvkbd -no-keypad")
+end
+local function kill_keyboard()
+    --wip
 end
 
 local mykeyboardbar = awful.wibar{ position = "bottom" }
@@ -110,8 +97,6 @@ mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 -- }}}
 
--- {{{ Wibar
--- Create a textclock widget
 mytextclock = wibox.widget.textclock("%H:%M")
 
 -- Create a wibox for each screen and add it
@@ -202,15 +187,10 @@ awful.screen.connect_for_each_screen(function(s)
         },
     }
 end)
--- }}}
 
--- {{{ Mouse bindings
 root.buttons(gears.table.join(
-    awful.button({ }, 3, function () mymainmenu:toggle() end)
 ))
--- }}}
 
--- {{{ Key bindings
 globalkeys = gears.table.join(
 )
 
@@ -228,10 +208,7 @@ clientbuttons = gears.table.join(
 
 -- Set keys
 root.keys(globalkeys)
--- }}}
 
--- {{{ Rules
--- Rules to apply to new clients (through the "manage" signal).
 awful.rules.rules = {
     -- All clients will match this rule.
     { rule = { },
@@ -265,10 +242,7 @@ awful.rules.rules = {
       }, properties = { titlebars_enabled = true }
     },
 }
--- }}}
 
--- {{{ Signals
--- Signal function to execute when a new client appears.
 client.connect_signal("manage", function (c)
     -- Set the windows at the slave,
     -- i.e. put it at the end of others instead of setting it master.
