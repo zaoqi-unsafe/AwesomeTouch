@@ -234,7 +234,7 @@ awful.rules.rules = {
               end
           end
           mykeyboardbar.visible = true
-          --wip
+          kb:geometry(mykeyboardbar:geometry())
       end },
 
     { rule_any = { type = { "dialog" } }, properties = { titlebars_enabled = true }
