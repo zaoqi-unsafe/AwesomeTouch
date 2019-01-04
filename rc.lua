@@ -86,8 +86,8 @@ local function set_keyboard()
     awful.spawn("xvkbd -no-keypad")
 end
 
-local mybottom = awful.wibar{ position = "bottom" }
-local mybottom_normal_height = mybottom.height
+local mykeyboardbar = awful.wibar{ position = "bottom" }
+--mykeyboardbar.height = 0
 --Wwip
 
 myawesomemenu = {
