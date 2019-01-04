@@ -65,16 +65,19 @@ local function client_menu_toggle_fn()
     end
 end
 
+local mykeyboardbar = awful.wibar{ position = "bottom", visible = false, height = 50 }
 local mykeyboard = "xvkbd"
 local function set_keyboard()
     awful.spawn("xvkbd -no-keypad")
 end
 local function kill_keyboard()
-    --wip
+    for _, c in ipairs(client.get()) do
+        if c.instance == mykeyboard then
+            c:kill()
+        end
+    end
+    mykeyboardbar.visible = false
 end
-
-local mykeyboardbar = awful.wibar{ position = "bottom" }
-mykeyboardbar.visible = false
 --Wwip
 
 myawesomemenu = {
@@ -131,7 +134,6 @@ myclosebutton:buttons(gears.table.join(
 
 
 local function set_wallpaper(s)
-    -- Wallpaper
     if beautiful.wallpaper then
         local wallpaper = beautiful.wallpaper
         if type(wallpaper) == "function" then
@@ -212,12 +214,13 @@ awful.rules.rules = {
         skip_taskbar = true,
         titlebars_enabled = true },
       callback = function(kb)
-    for _, c in ipairs(client.get()) do
-        if c.instance == mykeyboard and c ~= kb then
-            c:kill()
-        end
-        end
-          -- wip
+          for _, c in ipairs(client.get()) do
+              if c.instance == mykeyboard and c ~= kb then
+                  c:kill()
+              end
+          end
+          mykeyboardbar.visible = true
+          --wip
       end },
 
     { rule_any = { type = { "dialog" } }, properties = { titlebars_enabled = true }
