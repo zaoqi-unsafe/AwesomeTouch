@@ -83,23 +83,7 @@ end
 
 local mykeyboard = "xvkbd"
 local function set_keyboard()
-    local kb = nil
-    for _, c in ipairs(client.get()) do
-        if c.instance == mykeyboard then
-            kb = c
-            break
-        end
-    end
-    for _, c in ipairs(client.get()) do
-        if c.instance == mykeyboard and c ~= kb then
-            c:kill()
-        end
-    end
-    if not kb then
-        awful.spawn("xvkbd -no-keypad")
-        return
-    end
-    --wip
+    awful.spawn("xvkbd -no-keypad")
 end
 
 myawesomemenu = {
@@ -264,7 +248,14 @@ awful.rules.rules = {
         above = true,
         skip_taskbar = true,
         titlebars_enabled = true },
-      callback = function(x) set_keyboard() end },
+      callback = function(kb)
+    for _, c in ipairs(client.get()) do
+        if c.instance == mykeyboard and c ~= kb then
+            c:kill()
+        end
+        end
+          -- wip
+      end },
 
     { rule_any = { type = { "dialog" }
       }, properties = { titlebars_enabled = true }
