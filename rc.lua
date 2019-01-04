@@ -65,8 +65,21 @@ local function client_menu_toggle_fn()
     end
 end
 
-local mykeyboardbar = awful.wibar{ position = "bottom", visible = false, height = 50 }
+local mykeyboardheight = 100
+local mykeyboardbar = awful.wibar{ position = "bottom", visible = false, height = mykeyboardheight }
 local mykeyboard = "xvkbd"
+local function update_mykeyboard_height()
+    local w, h = root.size()
+    if w > h then
+        mykeyboardheight = h*0.4
+    else
+        mykeyboardheight = h*0.2
+    end
+    mykeyboardheight = math.floor(mykeyboardheight)
+    mykeyboardbar:remove()
+    mykeyboardbar = awful.wibar{ position = "bottom", visible = false, height = mykeyboardheight }
+end
+update_mykeyboard_height()
 local function set_keyboard()
     awful.spawn("xvkbd -no-keypad")
 end
@@ -143,7 +156,8 @@ local function set_wallpaper(s)
     end
 end
 
-screen.connect_signal("property::geometry", set_wallpaper)
+screen.connect_signal("property::geometry",
+    function(s) update_mykeyboard_height() set_wallpaper(s) end)
 
 awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
