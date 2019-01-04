@@ -87,7 +87,7 @@ local function set_keyboard()
 end
 
 local mykeyboardbar = awful.wibar{ position = "bottom" }
---mykeyboardbar.height = 0
+mykeyboardbar.visible = false
 --Wwip
 
 myawesomemenu = {
