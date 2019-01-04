@@ -177,14 +177,11 @@ awful.screen.connect_for_each_screen(function(s)
     }
 end)
 
-root.buttons(gears.table.join(
-))
+root.buttons(gears.table.join())
 
-globalkeys = gears.table.join(
-)
+globalkeys = gears.table.join()
 
-clientkeys = gears.table.join(
-)
+clientkeys = gears.table.join()
 
 clientbuttons = gears.table.join(
     awful.button({ }, 1, function (c)
@@ -195,7 +192,6 @@ clientbuttons = gears.table.join(
         c:raise()
     end))
 
--- Set keys
 root.keys(globalkeys)
 
 awful.rules.rules = {
