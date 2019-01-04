@@ -225,8 +225,7 @@ awful.rules.rules = {
       properties = {
         floating = true,
         above = true,
-        skip_taskbar = true,
-        titlebars_enabled = true },
+        skip_taskbar = true, },
       callback = function(kb)
           for _, c in ipairs(client.get()) do
               if c.instance == mykeyboard and c ~= kb then
