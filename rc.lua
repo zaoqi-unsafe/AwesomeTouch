@@ -14,9 +14,9 @@ local freedesktop = require("freedesktop")
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
 if awesome.startup_errors then
-    naughty.notify({ preset = naughty.config.presets.critical,
+    naughty.notify{ preset = naughty.config.presets.critical,
                      title = "Oops, there were errors during startup!",
-                     text = awesome.startup_errors })
+                     text = awesome.startup_errors }
 end
 
 -- Handle runtime errors after startup
@@ -27,9 +27,9 @@ do
         if in_error then return end
         in_error = true
 
-        naughty.notify({ preset = naughty.config.presets.critical,
+        naughty.notify{ preset = naughty.config.presets.critical,
                          title = "Oops, an error happened!",
-                         text = tostring(err) })
+                         text = tostring(err) }
         in_error = false
     end)
 end
@@ -55,7 +55,7 @@ local function client_menu_toggle_fn()
             instance:hide()
             instance = nil
         else
-            instance = awful.menu.clients({ theme = { width = 250 } })
+            instance = awful.menu.clients{ theme = { width = 250 } }
         end
     end
 end
@@ -115,8 +115,9 @@ mymainmenu = freedesktop.menu.build{
             { "off", kill_mykeyboard }}},
     }
 }
-mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
-                                     menu = mymainmenu })
+mylauncher = awful.widget.launcher{
+    image = beautiful.awesome_icon,
+    menu = mymainmenu }
 
 menubar.utils.terminal = terminal
 
@@ -183,7 +184,7 @@ awful.screen.connect_for_each_screen(function(s)
     s.mylayoutbox:buttons(gears.table.join())
     s.mytaglist = awful.widget.taglist(s, awful.widget.taglist.filter.all, taglist_buttons)
     s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, tasklist_buttons)
-    s.mywibox = awful.wibar({ position = "top", screen = s })
+    s.mywibox = awful.wibar{ position = "top", screen = s }
     s.mywibox:setup {
         layout = wibox.layout.align.horizontal,
         {
