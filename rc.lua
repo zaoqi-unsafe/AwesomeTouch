@@ -78,7 +78,7 @@ update_mykeyboard_height()
 local function set_keyboard()
     awful.spawn("xvkbd -no-keypad")
 end
-local function kill_keyboard()
+local function kill_mykeyboard()
     for _, c in ipairs(client.get()) do
         if c.instance == mykeyboard then
             c:kill()
@@ -86,6 +86,15 @@ local function kill_keyboard()
     end
     mykeyboardbar.visible = false
 end
+local function mykeyboard_running()
+    for _, c in ipairs(client.get()) do
+        if c.instance == mykeyboard then
+            return true
+        end
+    end
+    return false
+end
+screen.connect_signal("tag::history::update", function() if mykeyboard_running() then set_keyboard() end end)
 
 myawesomemenu = {
    { "hotkeys", function() return false, hotkeys_popup.show_help end},
