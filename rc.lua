@@ -32,21 +32,6 @@ if awesome.startup_errors then
         text = awesome.startup_errors }
 end
 
--- Handle runtime errors after startup
-do
-    local in_error = false
-    awesome.connect_signal("debug::error", function (err)
-        -- Make sure we don't go into an endless error loop
-        if in_error then return end
-        in_error = true
-
-        naughty.notify{ preset = naughty.config.presets.critical,
-        title = "Oops, an error happened!",
-        text = tostring(err) }
-        in_error = false
-    end)
-end
-
 beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 
 terminal = "x-terminal-emulator"
@@ -256,8 +241,19 @@ awful.rules.rules = {
           kb:geometry(mykeyboardbar:geometry())
       end },
 
-    { rule_any = { type = { "dialog" } }, properties = { titlebars_enabled = true }
-    },
+    { rule_any = { type = { "dialog" } },
+      callback = function(c)
+          local cg = c:geometry()
+          local s = awful.screen.focused()
+          local wg = s.workarea
+          if cg.x+cg.width > wg.x+wg.width or cg.y+cg.height > wg.y+wg.height then
+              c.floating = false
+              c.titlebars_enabled = false
+          else
+              c.floating = true
+              c.titlebars_enabled = true
+          end
+      end },
 }
 
 client.connect_signal("manage", function (c)
