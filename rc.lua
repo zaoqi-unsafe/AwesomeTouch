@@ -242,16 +242,19 @@ awful.rules.rules = {
       end },
 
     { rule_any = { type = { "dialog" } },
+      properties = {
+        floating = true,
+        titlebars_enabled = true, },
       callback = function(c)
           local cg = c:geometry()
           local s = awful.screen.focused()
           local wg = s.workarea
           if cg.x+cg.width > wg.x+wg.width or cg.y+cg.height > wg.y+wg.height then
               c.floating = false
-              c.titlebars_enabled = false
+              awful.titlebar.hide(c)
           else
               c.floating = true
-              c.titlebars_enabled = true
+              awful.titlebar.show(c)
           end
       end },
 }
