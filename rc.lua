@@ -135,10 +135,6 @@ menubar.utils.terminal = terminal
 
 mytextclock = wibox.widget.textclock("%H:%M")
 
-awful.screen.connect_for_each_screen(function(s)
-    freedesktop.desktop.add_icons{ screen = s }
-end)
-
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
                     awful.button({ }, 1, function(t) t:view_only() end))
