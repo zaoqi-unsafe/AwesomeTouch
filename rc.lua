@@ -34,11 +34,9 @@ end
 
 beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 
-terminal = "x-terminal-emulator"
-editor = os.getenv("EDITOR") or "editor"
-editor_cmd = terminal .. " -e " .. editor
-
-modkey = "Mod4"
+local terminal = "x-terminal-emulator"
+local editor = os.getenv("EDITOR") or "editor"
+local editor_cmd = terminal .. " -e " .. editor
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
@@ -81,14 +79,14 @@ local function mykeyboard_running()
 end
 screen.connect_signal("tag::history::update", function() if mykeyboard_running() then set_mykeyboard() end end)
 
-myawesomemenu = {
+local myawesomemenu = {
    { "manual", terminal .. " -e man awesome" },
    { "edit config", editor_cmd .. " " .. awesome.conffile },
    { "restart", awesome.restart },
    { "quit", function() awesome.quit() end}
 }
 
-mymainmenu = freedesktop.menu.build{
+local mymainmenu = freedesktop.menu.build{
     before = {
         { "awesome", myawesomemenu, beautiful.awesome_icon }
     },
@@ -99,13 +97,13 @@ mymainmenu = freedesktop.menu.build{
             { "off", kill_mykeyboard }}},
     }
 }
-mylauncher = awful.widget.launcher{
+local mylauncher = awful.widget.launcher{
     image = beautiful.awesome_icon,
     menu = mymainmenu }
 
 menubar.utils.terminal = terminal
 
-mytextclock = wibox.widget.textclock("%H:%M")
+local mytextclock = wibox.widget.textclock("%H:%M")
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
@@ -153,7 +151,7 @@ end
 screen.connect_signal("property::geometry",
     function(s)
         update_mykeyboard_height()
-        set_mykeyboard()
+        if mykeyboard_running() then set_mykeyboard() end
         set_wallpaper(s) end)
 
 awful.screen.connect_for_each_screen(function(s)
@@ -189,10 +187,10 @@ awful.screen.connect_for_each_screen(function(s)
 end)
 
 root.buttons(gears.table.join())
-globalkeys = gears.table.join()
-clientkeys = gears.table.join()
+local globalkeys = gears.table.join()
+local clientkeys = gears.table.join()
 
-clientbuttons = gears.table.join(
+local clientbuttons = gears.table.join(
     awful.button({ }, 1, function (c)
         if c.instance == mykeyboard then
         else
