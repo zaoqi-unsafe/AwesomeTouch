@@ -33,6 +33,9 @@ if awesome.startup_errors then
 end
 
 beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
+beautiful.font = "sans 12"
+beautiful.menu_height = beautiful.xresources.apply_dpi(20)
+beautiful.menu_width = beautiful.xresources.apply_dpi(200)
 
 local terminal = "x-terminal-emulator"
 local editor = os.getenv("EDITOR") or "editor"
