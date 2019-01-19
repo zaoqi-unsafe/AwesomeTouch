@@ -127,7 +127,7 @@ local tasklist_buttons = gears.table.join(
             end
         end))
 
-local myclosebutton=awful.widget.button{ image = "/usr/share/awesome/themes/default/titlebar/close_normal.png" }
+local myclosebutton=awful.widget.button{ image = beautiful.titlebar_close_button_normal }
 myclosebutton:buttons(gears.table.join(
     awful.button({}, 1, nil, function()
         local c = client.focus
