@@ -64,7 +64,7 @@ local mykeyboard = "xvkbd"
 local function update_mykeyboard_height()
     local w, h = root.size()
     if w > h then
-        mykeyboardheight = h*0.4
+        mykeyboardheight = h*0.35
     else
         mykeyboardheight = h*0.2
     end
@@ -164,7 +164,10 @@ local function set_wallpaper(s)
 end
 
 screen.connect_signal("property::geometry",
-    function(s) update_mykeyboard_height() set_wallpaper(s) end)
+    function(s)
+        update_mykeyboard_height()
+        set_mykeyboard()
+        set_wallpaper(s) end)
 
 awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
@@ -177,7 +180,9 @@ awful.screen.connect_for_each_screen(function(s)
     s.mylayoutbox:buttons(gears.table.join())
     s.mytaglist = awful.widget.taglist(s, awful.widget.taglist.filter.all, taglist_buttons)
     s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, tasklist_buttons)
-    s.mywibox = awful.wibar{ position = "top", screen = s }
+    local rtwi, rtht = root.size()
+    local mywiht = math.floor(math.max(rtwi, rtht)*0.04)
+    s.mywibox = awful.wibar{ position = "top", screen = s, height = mywiht }
     s.mywibox:setup {
         layout = wibox.layout.align.horizontal,
         {
