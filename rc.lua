@@ -52,7 +52,7 @@ local mykeyboard = "xvkbd"
 local function update_mykeyboard_height()
     local w, h = root.size()
     if w > h then
-        mykeyboardheight = h*0.35
+        mykeyboardheight = h*0.27
     else
         mykeyboardheight = h*0.2
     end
